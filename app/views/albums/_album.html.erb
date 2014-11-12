@@ -1,0 +1,7 @@
+--><div class="my-item <%= album.folder? ? 'my-folder-album' : 'my-album' %>">
+  <div class="my-title"><%= album.title %></div>
+  <a href="<%= album.protected? ? an_ajax_album_path(album.name) : an_album_path(album.name) %>">
+    <img src="<%= album_thumb album %>"
+      alt="<%= album.title %>" title="<%= album.title %>">
+  </a>
+</div><!--

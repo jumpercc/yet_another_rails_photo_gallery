@@ -1,0 +1,32 @@
+<%- nearest = get_nearest -%>
+<%- if controller_name == "image" && action_name == "view_in_list" %>
+  <%- if @all_image_sizes.index(@image_size) == 0 -%>
+    <li><a href="/settings/image_size/<%= @all_image_sizes[1] %>" title="<%= t('larger_image') %>" rel="nofollow"
+      ><span class="glyphicon glyphicon-resize-full"></span></a></li>
+  <%- else -%>
+    <li><a href="/settings/image_size/<%= @all_image_sizes[0] %>" title="<%= t('smaller_image') %>" rel="nofollow"
+      ><span class="glyphicon glyphicon-resize-small"></span></a></li>
+  <%- end -%>
+
+  <%- if nearest[:prev].nil? -%>
+    <li class="my-nav-text"><span class="glyphicon glyphicon-arrow-left"></span></li>
+  <%- else -%>
+    <li id="my-nav-prev-link" class="my-nav-link"><a href="<%= nearest[:prev] %>" title="<%= t('navigation.prev_label') %>"><span class="glyphicon glyphicon-arrow-left"></span></a></li>
+  <%- end -%>
+<%- end -%>
+
+<%- if nearest[:up].nil? -%>
+  <%- if controller_name == "image" %>
+    <li class="my-nav-text"><span class="glyphicon glyphicon-arrow-up"></span></li>
+  <%- end -%>
+<%- else -%>
+  <li id="my-nav-up-link" class="my-nav-link"><a href="<%= nearest[:up] %>" title="<%= t('navigation.up_label') %>"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
+<%- end -%>
+
+<%- if controller_name == "image" && action_name == "view_in_list" %>
+  <%- if nearest[:next].nil? -%>
+    <li class="my-nav-text"><span class="glyphicon glyphicon-arrow-right"></span></li>
+  <%- else -%>
+    <li id="my-nav-next-link" class="my-nav-link"><a href="<%= nearest[:next] %>" title="<%= t('navigation.next_label') %>"><span class="glyphicon glyphicon-arrow-right"></span></a></li>
+  <%- end -%>
+<%- end -%>

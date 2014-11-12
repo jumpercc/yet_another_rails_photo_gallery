@@ -1,0 +1,145 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  padding-top: 50px;
+}
+
+.my-content {
+  padding: 0px;
+  text-align: center;
+}
+
+.my-item {
+  display: inline-block;
+  width:   200px;
+  height:  200px;
+  margin:  2em 5px 5px 5px;
+  position: relative;
+  background-color: #EEE;
+
+  .my-title {
+    display: block;
+    width: 200px;
+    max-width: 200px;
+    min-width: 200px;
+    overflow: hidden;
+    font-size: 1em;
+    transform: translate(0%, -100%);
+    background-color: #DDD;
+    white-space: nowrap;
+    padding: 0 1em 0 1em;
+  }
+
+  &.my-selected {
+    .my-title {
+        background-color: #F89D42 !important;
+    }
+  }
+
+  img {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.my-item-stub, .my-item-stub .my-title {
+  background-color: transparent !important;
+}
+
+.my-folder-album .my-title, .my-album .my-title {
+  background-repeat: no-repeat;
+  padding-left: 25px !important;
+}
+
+.my-folder-album .my-title {
+  background-image: url('/folder-icon.png');
+}
+
+.my-album .my-title {
+  background-image: url('/album-icon.png');
+}
+
+.image-tags {
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  a {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+
+.my-tag-8 {
+  font-size: 1em;
+  margin-right: 0.4em
+}
+.my-tag-16 {
+  font-size: 1.3em;
+  margin-right: 0.5em
+}
+.my-tag-32 {
+  font-size: 1.6em;
+  margin-right: 0.6em
+}
+.my-tag-64 {
+  font-size: 1.9em;
+  margin-right: 0.7em
+}
+.my-tag-128 {
+  font-size: 2.1em;
+  margin-right: 0.8em
+}
+.my-tag-256 {
+  font-size: 2.4em;
+  margin-right: 0.9em
+}
+.my-tag-512 {
+  font-size: 2.7em;
+  margin-right: 1em
+}
+.my-tag-1024 {
+  font-size: 3em;
+  margin-right: 1.2em
+}
+
+li.my-hidden-nav {
+  display: none;
+}
+
+li.my-foolscreen-hidden-nav-item {
+  display: none;
+}
+
+.my-admin-panel {
+  margin-top: 2em;
+}
+
+.my-placeholder {
+  color: #777;
+}
+
+.my-nav-text {
+  padding: 15px 15px 15px 15px;
+  line-height: 20px;
+}
+
+.my-page-title {
+  font-weight: bold !important;
+  color: black !important;
+}
+
+.my-big-image {
+  margin-left: -50px;
+  margin-right: -50px;
+}
+
+.pagination {
+  display: block !important;
+  font-size: 1.2em;
+  font-weight: bold;
+}

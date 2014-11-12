@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  image_id: 1
+  tag_id: 1
+
+two:
+  image_id: 1
+  tag_id: 2
+
+three:
+  image_id: 2
+  tag_id: 1

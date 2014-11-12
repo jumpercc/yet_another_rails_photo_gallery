@@ -1,0 +1,17 @@
+TODO:
+- upload images
+-- https://github.com/thoughtbot/paperclip
+-- http://plugins.krajee.com/file-input
+-- https://github.com/kartik-v/bootstrap-fileinput/blob/master/js/fileinput.js
+-- http://plugins.krajee.com/file-input/demo
+-- http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously-with-jquery
+- ie
+- unicorn, capistrano
+-- http://habrahabr.ru/post/240025/
+-- http://wiki.summercode.com/rails_deployment_step_by_step_to_ubuntu
+- js, error after breadcrumb
+- error pages
+- error on screen
+- report errorrs
+- too many queries on dates list
+- tag cloud no by absolute numbers

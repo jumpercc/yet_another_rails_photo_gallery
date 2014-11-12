@@ -1,0 +1,73 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+cats:
+  id: 1
+  name: cats
+  title: Кошки
+  parent_id:
+  thumb:
+  folder: true
+  hidden: false
+  password_hash:
+  thumb_from: cats:devons
+  protected: false
+
+devons:
+  id: 2
+  name: cats:devons
+  title: Кошки-девошки
+  parent_id: 1
+  thumb: cats01.jpg
+  folder: false
+  hidden: false
+  password_hash:
+  thumb_from:
+  protected: false
+
+protected:
+  id: 3
+  name: protected
+  title: Закрытый
+  parent_id:
+  thumb:
+  folder: true
+  hidden: false
+  password_hash: abc
+  thumb_from: protected:myr
+  protected: true
+
+myr:
+  id: 4
+  name: protected:myr
+  title: Мыр
+  parent_id: 3
+  thumb: myr01.jpg
+  folder: false
+  hidden: false
+  password_hash:
+  thumb_from:
+  protected: true
+
+hidden:
+  id: 5
+  name: protected:hidden
+  title: AAAA
+  parent_id: 3
+  thumb: secret.jpg
+  folder: false
+  hidden: true
+  password_hash:
+  thumb_from:
+  protected: false
+
+protected2:
+  id: 6
+  name: protected2
+  title: Закрытый2
+  parent_id:
+  thumb:
+  folder: true
+  hidden: true
+  password_hash: abc
+  thumb_from:
+  protected: true

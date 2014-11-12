@@ -1,0 +1,3 @@
+<% content_for :title, @album.nil? ? t('albums_title') : @album.title %>
+<!--<%= render @items, item_offset: @items.offset %>-->
+<%= will_paginate @items %>

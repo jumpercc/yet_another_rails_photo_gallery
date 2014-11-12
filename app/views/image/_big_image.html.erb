@@ -1,0 +1,9 @@
+--><div>
+  <%- unless next_page.nil? -%><a href="<%= next_page %>"><%- end -%>
+  <img src="/albums/<%= @image_size %>/<%= big_image.album.name %>/<%= big_image.name %>"
+    alt="<%= big_image.title %>" title="<%= big_image.title %>" class="my-big-image">
+  <%- unless next_page.nil? -%></a><%- end -%>
+  <div class="image-tags"><%- big_image.tags.each do |tag|
+    -%><a href="<%= a_tag_path tag.tag %>"><%= tag.tag %></a><%-
+  end -%></div>
+</div><!--

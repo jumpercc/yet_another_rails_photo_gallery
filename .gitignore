@@ -1,0 +1,14 @@
+.bundle
+db/*.sqlite3
+log/*
+tmp/
+.sass-cache/
+logs/
+Gemfile.lock
+stat/
+public/albums/
+public/wmail*.html
+public/assets/
+public/stuff/
+*.swp
+*.swo

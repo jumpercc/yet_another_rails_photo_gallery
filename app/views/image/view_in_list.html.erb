@@ -1,0 +1,5 @@
+<%- unless @items.nil? -%>
+<% content_for :title, @items.first.title %>
+<!--<%= render partial: "big_image", collection: @items,
+  locals: { next_page: get_nearest()[:next] } %>-->
+<%- end -%>

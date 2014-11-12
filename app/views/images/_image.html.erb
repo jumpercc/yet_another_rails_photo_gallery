@@ -1,0 +1,12 @@
+<%- page = item_offset + image_counter + 1 -%>
+--><div class="my-item">
+  <div class="my-title"><%= image.title %></div>
+  <a href="<%= from_item == "tag" \
+      ? tag_image_path( tag: @tag.tag, page: page, from: from_item )
+      : from_item == "date" \
+        ? date_image_path( date: @date, page: page, from: from_item )
+        : album_image_path( album: image.album.name, page: page, from: from_item ) %>">
+    <img src="/albums/thumbs/<%= image.album.name %>/<%= image.name %>"
+      alt="<%= image.title %>" title="<%= image.title %>">
+  </a>
+</div><!--
