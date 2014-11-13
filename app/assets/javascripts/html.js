@@ -12,6 +12,20 @@ window.my_html = {
         }
         klass = "my-tag-" + klass;
 
+        if (SignedIn) {
+            $('<a/>', {
+                "class": "btn btn-danger btn-xs active my-custom-link",
+                role: "button",
+                text: 'X',
+                title: I18n.admin.delete + ' "' + tag.name + '"',
+                "data-tag": tag.name,
+            }).appendTo(container).click(function(e) {
+                var tag = $(e.target).attr("data-tag");
+                my_admin.remove_tag( tag );
+                return false;
+            });
+        }
+
         $('<a/>', {
             "class": klass,
             href: get_absolute_location() + "#" + hash,

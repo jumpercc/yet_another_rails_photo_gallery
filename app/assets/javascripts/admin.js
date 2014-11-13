@@ -362,5 +362,37 @@ window.my_admin = {
             }
         });
     },
+
+    remove_tag: function( tag, onok ) {
+        var url = get_absolute_location()
+            + 'tag/' + encodeURIComponent(tag) + '/delete.json';
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: {},
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data) {
+                if ( data.code == 200 ) {
+                    if ( onok ) {
+                        return onok();
+                    }
+                    else {
+                        my.load_page();
+                    }
+                }
+                else if ( data.error ) {
+                    my_html.show_error_message( data.error );
+                }
+                else {
+                    my_html.show_error_message( I18n.error.internal_error, data );
+                }
+            },
+            fail: function( jqXHR, textStatus, errorThrown ) {
+                my_html.show_error_message( I18n.error.internal_error, textStatus );
+            }
+        });
+    },
 };
 

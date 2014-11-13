@@ -159,6 +159,5 @@ http {
 ## Known bugs and limitations
 
 - no web upload yet
-- no tags creation yet
 - AJAX version doesn't work in Internet Explorer
 

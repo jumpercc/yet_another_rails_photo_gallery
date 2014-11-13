@@ -23,4 +23,14 @@ class TagController < ApplicationController
 
     render :json => { code: 200 }
   end
+
+  def delete
+    tag = Tag.find_by_tag( params[:tag] )
+    if tag.nil?
+      render :json => { code: 404 }
+    else
+      tag.destroy
+      render :json => { code: 200 }
+    end
+  end
 end

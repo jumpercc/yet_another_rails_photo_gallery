@@ -52,4 +52,28 @@ class TagControllerTest < ActionController::TestCase
       json_response['error']
     assert_equal 400, json_response['code']
   end
+
+  test "tag delete" do
+    get :list_tags, :format => "json"
+    assert_response :success
+    assert_equal 200, json_response['code'], 'code eq 200'
+    assert_not_nil json_response['items']
+      .find{ |i| i['name'] == tags(:one).tag }
+
+    cookies.signed[:user] = {
+      value: users(:user1).name,
+      secure: true,
+    }
+    post :delete, :tag => tags(:one).tag,
+      :format => "json"
+    assert_response :success
+    assert_equal nil, json_response['error']
+    assert_equal 200, json_response['code']
+
+    get :list_tags, :format => "json"
+    assert_response :success
+    assert_equal 200, json_response['code'], 'code eq 200'
+    assert_nil json_response['items']
+      .find{ |i| i['name'] == tags(:one).tag }
+  end
 end

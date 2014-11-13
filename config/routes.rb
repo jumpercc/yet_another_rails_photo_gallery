@@ -11,9 +11,10 @@ CJGallery::Application.routes.draw do
   get "date"         => "album#calendar"
   get "date/:date"   => "image#by_date"
 
-  get "tag"          => "tag#list_tags"
-  get "tag/:tag"     => "image#by_tag"
-  post "tag/create"  => "tag#create"
+  get "tag"              => "tag#list_tags"
+  get "tag/:tag"         => "image#by_tag"
+  post "tag/create"      => "tag#create"
+  post "tag/:tag/delete" => "tag#delete"
 
   get  "image/:album/:name(.:format)" => "image#view", :name => /[-_A-Za-z0-9\.]+?/
   get  "album/:album/:name(.:format)" => "image#view", :name => /[-_A-Za-z0-9\.]+?/
