@@ -45,6 +45,7 @@ ru:
     empty_tag_specified: 'Тег не задан'
     no_album: 'Альбом не найден'
     no_image: 'Фотография не найдена'
+    tag_already_exists: 'Такой тег уже существует'
   info:
     created_successefully: 'Создан успешно'
     assigned_successefully: 'Тег добавлен успешно'

@@ -281,6 +281,17 @@ class RoutesTest < ActionController::TestCase
       },
       "/tag"
     )
+
+    assert_recognizes(
+      {
+        :controller => "tag",
+        :action => "create",
+      },
+      {
+        path: "/tag/create",
+        method: 'POST',
+      }
+    )
   end
 
   test "session routes" do

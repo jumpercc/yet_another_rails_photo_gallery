@@ -26,4 +26,30 @@ class TagControllerTest < ActionController::TestCase
     assert_select '.my-nav-text', 0
     assert_select '.my-content > a', Tag.all_with_images_count.size
   end
+
+  test "tag create" do
+    cookies.signed[:user] = {
+      value: users(:user1).name,
+      secure: true,
+    }
+    tag = 'A test tag'
+    post :create, :new => { :tag => tag, },
+      :format => "json"
+    assert_response :success
+    assert_equal nil, json_response['error']
+    assert_equal 200, json_response['code']
+
+    get :list_tags, :format => "json"
+    assert_response :success
+    assert_equal 200, json_response['code'], 'code eq 200'
+    assert_not_nil json_response['items']
+      .find{ |i| i['name'] == tag }
+
+    post :create, :new => { :tag => tag, },
+      :format => "json"
+    assert_response :success
+    assert_equal I18n.t('error.tag_already_exists'),
+      json_response['error']
+    assert_equal 400, json_response['code']
+  end
 end

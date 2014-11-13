@@ -186,12 +186,20 @@ window.my_admin = {
         );
     },
 
+    create_tag: function( fields, onok ) {
+        return this._create_item( 'tag', fields, onok );
+    },
+
     create_album: function( fields, onok ) {
+        return this._create_item( 'album', fields, onok );
+    },
+
+    _create_item: function( item, fields, onok ) {
         var request_params = {};
         for ( var k in fields ) {
             request_params[ "new[" + k + "]" ] = fields[k];
         }
-        var url = get_absolute_location() + 'album/create.json';
+        var url = get_absolute_location() + item + '/create.json';
         $.ajax({
             type: 'post',
             url: url,

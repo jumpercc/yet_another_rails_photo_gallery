@@ -8,8 +8,8 @@ class Tag < ActiveRecord::Base
   def self.all_with_images_count
     self.select(
       'tags.*, COUNT(*) AS images_count'
-    ).joins(
-      'JOIN images_tags ON ( tags.id = images_tags.tag_id )'
+    ).joins( # a bug: returns count=1 when no images for tag
+      'LEFT JOIN images_tags ON ( tags.id = images_tags.tag_id OR images_tags.tag_id IS NULL )'
     ).group( 'tag' ).order( 'tag' )
   end
 

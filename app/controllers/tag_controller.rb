@@ -10,4 +10,17 @@ class TagController < ApplicationController
       format.json { render :json => { code: 200, items: @items } }
     end
   end
+
+  def create
+    tag = Tag.find_by_tag( params[:new][:tag] )
+    if !tag.nil?
+      render :json => { code: 400,
+        error: I18n.t('error.tag_already_exists') }
+      return
+    end
+
+    Tag.create! tag: params[:new][:tag]
+
+    render :json => { code: 200 }
+  end
 end

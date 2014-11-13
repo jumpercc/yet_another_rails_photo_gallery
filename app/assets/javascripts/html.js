@@ -396,12 +396,18 @@ window.my_html = {
                 <h4 class="modal-title" id="create_tag_modal_label">{{I18n.admin.create_tag}}</h4>\
             </div>\
             <div class="modal-body">\
-                TODO // TODO\
+                <form method="POST" action="#" class="form-horizontal" role="form" onsubmit="return false">\
+                    <div class="form-group">\
+                        <div class="col-sm-12">\
+                            <input class="form-control" type="text" id="my-admin-new-tag" value="" />\
+                        </div>\
+                    </div>\
+                </form>\
             </div>\
             <div class="modal-footer">\
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{I18n.admin.close}}</button>\
                 <button type="button" class="btn btn-success"\
-                    onclick="">{{I18n.admin.create}}</button>\
+                    onclick="return my_html.create_tag_modal_onclick(event)">{{I18n.admin.create}}</button>\
             </div>\
         </div>\
     </div>\
@@ -410,6 +416,27 @@ window.my_html = {
         return Mustache.render( my_html._create_tag_modal_tmpl, {
             I18n: I18n,
         });
+    },
+    create_tag_modal_onclick: function() {
+        $(".has-error").removeClass('has-error');
+        var valid = true;
+
+        var tag = $("#my-admin-new-tag").val();
+        if ( tag == undefined || tag.length == 0 ) {
+            $("#my-admin-new-tag").parent().addClass('has-error');
+            valid = false;
+        }
+
+        if (valid) {
+            my_admin.create_tag({
+                tag: tag,
+            }, function() {
+                my_html.show_ok_message(I18n.info.created_successefully);
+                my_html.load_tags_list();
+            });
+            $('#create_tag_modal').modal('hide');
+        }
+        return valid;
     },
 
     _get_edit_images_form_tmpl:

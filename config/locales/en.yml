@@ -44,6 +44,7 @@ en:
     empty_tag_specified: 'No tag specified'
     no_album: 'Album not found'
     no_image: 'Image not found'
+    tag_already_exists: 'Tag already exists'
   info:
     created_successefully: 'Created successefully'
     assigned_successefully: 'Assigned successefully'

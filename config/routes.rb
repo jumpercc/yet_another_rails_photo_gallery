@@ -13,6 +13,7 @@ CJGallery::Application.routes.draw do
 
   get "tag"          => "tag#list_tags"
   get "tag/:tag"     => "image#by_tag"
+  post "tag/create"  => "tag#create"
 
   get  "image/:album/:name(.:format)" => "image#view", :name => /[-_A-Za-z0-9\.]+?/
   get  "album/:album/:name(.:format)" => "image#view", :name => /[-_A-Za-z0-9\.]+?/
