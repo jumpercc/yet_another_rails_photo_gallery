@@ -74,6 +74,8 @@ function force_https() {
     var current_page = window.location.href;
     if ( ! /^https:/.test(current_page) ) {
         document.location.href = current_page.replace( /^http:/, 'https:' );
+        return true;
     }
+    return false;
 }
 

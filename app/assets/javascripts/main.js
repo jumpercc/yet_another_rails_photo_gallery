@@ -84,7 +84,9 @@ window.my = {
                     else if ( code == 403 ) {
                         var cb = function() {
                             if ( !Devel ) {
-                                force_https(); // may never returns
+                                if ( force_https() ) {
+                                    return;
+                                }
                             }
                             my_html.show_auth_form( data.self.name, data.password_for )
                         };
