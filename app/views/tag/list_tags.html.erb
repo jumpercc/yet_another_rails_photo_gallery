@@ -1,4 +1,4 @@
 <%- content_for :title, t('tags_title') -%>
 <%- @items.each do |tag|
-  -%><a class="<%= get_tag_css_class tag.images_count %>" href="<%= a_tag_path tag.tag %>""><%= tag.tag %> </a><%-
+  -%><a class="<%= get_tag_css_class tag.images_count %>" href="<%= a_tag_path tag.tag %>"><%= tag.tag %> </a><%-
 end -%>
