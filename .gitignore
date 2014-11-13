@@ -6,9 +6,11 @@ tmp/
 logs/
 Gemfile.lock
 stat/
-public/albums/
+public/albums
 public/wmail*.html
 public/assets/
 public/stuff/
 *.swp
 *.swo
+config/secrets.yml
+script/*load-photos.sh
