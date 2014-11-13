@@ -72,28 +72,7 @@ window.my_admin = {
             request_params[ "modified[" + k + "]" ] = params[k];
         }
         var url = get_absolute_location() + get_hash_location() + '/update.json';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: request_params,
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    my.load_page();
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
-            }
-        });
+        ajax_post( url, request_params, null );
     },
 
     set_items_title: function( items_list, title, item_type, onok ) {
@@ -129,39 +108,20 @@ window.my_admin = {
             request_params[ "modified[" + k + "]" ] = fields[k];
         }
         var url = get_absolute_location() + encodeURI(item_type) + '/update_list.json';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: request_params,
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    if ( high_bound < items_list.length ) {
-                        my_admin._update_items(
-                            items_list.slice( high_bound ),
-                            item_type, fields, onok
-                        );
-                    }
-                    else if ( onok ) {
-                        return onok();
-                    }
-                    else {
-                        my.load_page();
-                    }
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
+        ajax_post( url, request_params, function() {
+            if ( high_bound < items_list.length ) {
+                my_admin._update_items(
+                    items_list.slice( high_bound ),
+                    item_type, fields, onok
+                );
             }
-        });
+            else if ( onok ) {
+                return onok();
+            }
+            else {
+                my.load_page();
+            }
+        } );
     },
 
     load_all_albums_list: function(cb) {
@@ -200,65 +160,25 @@ window.my_admin = {
             request_params[ "new[" + k + "]" ] = fields[k];
         }
         var url = get_absolute_location() + item + '/create.json';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: request_params,
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    onok();
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
-            }
-        });
+        ajax_post( url, request_params, onok );
     },
 
     delete_items: function( item_type, items_list, onok ) {
         var url = get_absolute_location() + encodeURI(item_type) +
             '/' + encodeURI(items_list.shift()) + '/delete.json';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: {},
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    if ( items_list.length > 0 ) {
-                        my_admin.delete_items(
-                            item_type, items_list, onok
-                        );
-                    }
-                    else if ( onok ) {
-                        return onok();
-                    }
-                    else {
-                        my.load_page();
-                    }
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
+        ajax_post( url, {}, function() {
+            if ( items_list.length > 0 ) {
+                my_admin.delete_items(
+                    item_type, items_list, onok
+                );
             }
-        });
+            else if ( onok ) {
+                return onok();
+            }
+            else {
+                my.load_page();
+            }
+        } );
     },
 
     move_items: function( item_type, items_list, destination_album, onok ) {
@@ -303,96 +223,18 @@ window.my_admin = {
 
     remove_image_tag: function( tag, onok ) {
         var url = get_absolute_location() + get_hash_location() + '/remove_tag.json';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: { tag: tag },
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    if ( onok ) {
-                        return onok();
-                    }
-                    else {
-                        my.load_page();
-                    }
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
-            }
-        });
+        ajax_post( url, { tag: tag }, onok );
     },
 
     set_as_image_of_a_day: function( onok ) {
         var url = get_absolute_location() + get_hash_location() + '/image_of_a_day.json';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: {},
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    if ( onok ) {
-                        return onok();
-                    }
-                    else {
-                        my.load_page();
-                    }
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
-            }
-        });
+        ajax_post( url, {}, onok );
     },
 
     remove_tag: function( tag, onok ) {
         var url = get_absolute_location()
             + 'tag/' + encodeURIComponent(tag) + '/delete.json';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: {},
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    if ( onok ) {
-                        return onok();
-                    }
-                    else {
-                        my.load_page();
-                    }
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
-            }
-        });
+        ajax_post( url, {}, onok );
     },
 };
 

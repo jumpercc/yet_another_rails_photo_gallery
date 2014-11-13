@@ -397,54 +397,16 @@ window.my = {
 
     authentify: function( login, password ) {
         var url = get_absolute_location() + 'login.json'; // TODO https
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: { login: login, password: password },
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    location.reload(); // never returns
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
-            }
-        });
+        ajax_post( url, { login: login, password: password }, function() {
+            location.reload(); // never returns
+        } );
     },
 
     sign_out: function() {
         var url = get_absolute_location() + 'logout.json';
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: {},
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(data) {
-                if ( data.code == 200 ) {
-                    location.reload(); // never returns
-                }
-                else if ( data.error ) {
-                    my_html.show_error_message( data.error );
-                }
-                else {
-                    my_html.show_error_message( I18n.error.internal_error, data );
-                }
-            },
-            fail: function( jqXHR, textStatus, errorThrown ) {
-                my_html.show_error_message( I18n.error.internal_error, textStatus );
-            }
-        });
+        ajax_post( url, {}, function() {
+            location.reload(); // never returns
+        } );
     },
 
     custom_link_with_hash_click: function() {
