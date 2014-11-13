@@ -53,7 +53,6 @@ This is yet another photo gallery, as a rails application.
  - run `rails console production`
  - in console run `User.create!( name: 'CHANGE ME', password: 'CHANGE ME' )`, but change `CHANGE ME`'s to aproppriate values
 - copy `config/secrets.yml.example` to `config/secrets.yml` and set production `secret_key_base` and `album_hash_salt`
-- change favicon (`public/favicon.ico`) and `public/image_stub.png`
 - configure `nginx` with `passenger`
  - example config in the next section
  - or you can use any other web server/environment
