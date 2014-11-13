@@ -25,7 +25,7 @@ window.my_admin = {
             item_body = my_html.get_edit_image_form();
         }
 
-        if ( !is_image ) {
+        if ( !is_image && !/^(date|tag)\/?$/.test(hash) ) {
             items_list_body = my_html.get_edit_images_form();
         }
 
