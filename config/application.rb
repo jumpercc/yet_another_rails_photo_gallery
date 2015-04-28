@@ -47,5 +47,7 @@ module CJGallery
 
     I18n.config.enforce_available_locales = true
     I18n.config.available_locales = [ 'ru', 'en' ]
+
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
