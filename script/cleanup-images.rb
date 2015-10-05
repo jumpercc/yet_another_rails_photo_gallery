@@ -4,9 +4,12 @@ require 'find'
 require 'sqlite3'
 
 def get_fs_images( root, delete_files )
+  if File.symlink? root
+    root = File.realdirpath root
+  end
   fs_images = {}
   Find.find(root) do |path|
-    dimension, album, image = path.split('/').slice 2..4
+    dimension, album, image = path.split('/').slice -3..-1
     if File.directory? path
       if path !~ %r!^#{Regexp.escape(root)}(/[^/]+)?/?$!
         fs_images[album] ||= {}
