@@ -7,6 +7,8 @@ en:
   nojs_begin: 'This site can''t work without JavaScript. Use '
   nojs_simplified_version: 'simplified version'
   nojs_end: ' instead.'
+  js_title: 'JS'
+  nojs_title: 'no JS'
   invalid_url: 'Invalid url'
   en: 'English'
   ru: 'Русский'

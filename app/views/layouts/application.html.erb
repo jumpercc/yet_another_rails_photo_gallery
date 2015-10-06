@@ -22,6 +22,7 @@
           <li id="my-menu-album"><a href="#album"><%= t('albums_title') %></a></li>
           <li id="my-menu-tag"><a href="#tag"><%= t('tags_title') %></a></li>
           <li id="my-menu-date"><a href="#date"><%= t('by_date_title') %></a></li>
+          <li id="my-menu-date"><a href="/nojs/album" class="my-custom-link"><%= t('nojs_title') %></a></li>
           <% if request.ssl? || Rails.env.development? -%>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle my-custom-link" data-toggle="dropdown"><%= t('navigation.admin') %><span class="caret"></span></a>

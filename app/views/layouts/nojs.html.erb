@@ -15,6 +15,7 @@
           <li<%=raw album_selected? ? ' class="active"' : '' %>><a href="<%= albums_list_path %>"><%= t('albums_title') %></a></li>
           <li<%=raw tag_selected? ? ' class="active"' : '' %>><a href="<%= tags_cloud_path %>"><%= t('tags_title') %></a></li>
           <li<%=raw date_selected? ? ' class="active"' : '' %>><a href="<%= dates_list_path %>"><%= t('by_date_title') %></a></li>
+          <li><a href="/"><%= t('js_title') %></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <%- I18n.available_locales.each do |loc|

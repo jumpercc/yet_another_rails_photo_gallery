@@ -7,6 +7,8 @@ ru:
   nojs_begin: 'Полная версия сайта не работает без JavaScript. Вы можете использовать '
   nojs_simplified_version: 'упрощённую версию'
   nojs_end: '.'
+  js_title: 'JS'
+  nojs_title: 'без JS'
   invalid_url: 'Неправильный запрос'
   en: 'English'
   ru: 'Русский'
