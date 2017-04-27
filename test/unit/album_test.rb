@@ -24,12 +24,12 @@ class AlbumTest < ActiveSupport::TestCase
 
   test "has thumb_album" do
     assert_equal albums(:devons), albums(:cats).thumb_album
-    assert_equal nil, albums(:devons).thumb_album
+    assert_nil albums(:devons).thumb_album
   end
 
   test "has thumb_image" do
     assert_equal albums(:devons).thumb_image, images(:one)
-    assert_equal albums(:cats).thumb_image, nil
+    assert_nil albums(:cats).thumb_image
   end
 
   test "validations" do
@@ -63,7 +63,7 @@ class AlbumTest < ActiveSupport::TestCase
     )
     assert new_album.save
     assert !new_album.protected?
-    assert_equal new_album.password, nil
+    assert_nil new_album.password
   end
 
   test "real_thumb" do

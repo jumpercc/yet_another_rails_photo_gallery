@@ -14,7 +14,7 @@ class TagControllerTest < ActionController::TestCase
   end
 
   test "list tags nojs" do
-    get :list_tags, :nojs => true
+    get :list_tags, params: { :nojs => true }
     assert_response :success
     assert_select 'title', I18n.t('tags_title')
     assert_select 'ul.nav > li.active', 1
@@ -33,10 +33,10 @@ class TagControllerTest < ActionController::TestCase
       secure: true,
     }
     tag = 'A test tag'
-    post :create, :new => { :tag => tag, },
+    post :create, params: { :new => { :tag => tag, } },
       :format => "json"
     assert_response :success
-    assert_equal nil, json_response['error']
+    assert_nil json_response['error']
     assert_equal 200, json_response['code']
 
     get :list_tags, :format => "json"
@@ -45,7 +45,7 @@ class TagControllerTest < ActionController::TestCase
     assert_not_nil json_response['items']
       .find{ |i| i['name'] == tag }
 
-    post :create, :new => { :tag => tag, },
+    post :create, params: { :new => { :tag => tag, } },
       :format => "json"
     assert_response :success
     assert_equal I18n.t('error.tag_already_exists'),
@@ -64,10 +64,10 @@ class TagControllerTest < ActionController::TestCase
       value: users(:user1).name,
       secure: true,
     }
-    post :delete, :tag => tags(:one).tag,
+    post :delete, params: { :tag => tags(:one).tag },
       :format => "json"
     assert_response :success
-    assert_equal nil, json_response['error']
+    assert_nil json_response['error']
     assert_equal 200, json_response['code']
 
     get :list_tags, :format => "json"

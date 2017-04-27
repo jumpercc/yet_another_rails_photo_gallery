@@ -1,5 +1,5 @@
 class TagController < ApplicationController
-  skip_before_filter :authorize_admin, :only => [
+  skip_before_action :authorize_admin, :only => [
     :list_tags
   ]
 

@@ -3,7 +3,7 @@ require 'test_helper'
 
 class ImageControllerTest < ActionController::TestCase
   test "images, by_tag json" do
-    get :by_tag, :tag => tags(:one).tag, :format => "json"
+    get :by_tag, params: { :tag => tags(:one).tag }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code'], 'code eq 200'
     assert json_response.has_key?('items'), 'has items'
@@ -11,12 +11,12 @@ class ImageControllerTest < ActionController::TestCase
   end
 
   test "images, by_tag html" do
-    get :by_tag, :tag => tags(:one).tag
+    get :by_tag, params: { :tag => tags(:one).tag }
     assert_redirected_to "#tag/#{tags(:one).tag}"
   end
 
   test "images, by_date json" do
-    get :by_date, :date => images(:one).created_at, :format => "json"
+    get :by_date, params: { :date => images(:one).created_at }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code'], 'code eq 200'
     assert json_response.has_key?('items'), 'has items'
@@ -24,12 +24,12 @@ class ImageControllerTest < ActionController::TestCase
   end
 
   test "images, by_date html" do
-    get :by_date, :date => images(:one).created_at
+    get :by_date, params: { :date => images(:one).created_at }
     assert_redirected_to "#date/#{images(:one).created_at}"
   end
 
   test "view image, json" do
-    get :view, :album => images(:one).album.name, :name => images(:one).name, :format => "json"
+    get :view, params: { :album => images(:one).album.name, :name => images(:one).name }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code'], 'code eq 200'
 
@@ -55,7 +55,7 @@ class ImageControllerTest < ActionController::TestCase
   end
 
   test "view image, html" do
-    get :view, :album => images(:one).album.name, :name => images(:one).name
+    get :view, params: { :album => images(:one).album.name, :name => images(:one).name }
     assert_redirected_to "#image/#{images(:one).album.name}/#{images(:one).name}"
   end
 
@@ -65,14 +65,14 @@ class ImageControllerTest < ActionController::TestCase
       secure: true,
     }
     post :update_list,
-      :items_list => albums(:devons).images.collect{|i| i.name}.join(','),
-      :modified => { :title => 'test' }, :format => "json"
+      params: { :items_list => albums(:devons).images.collect{|i| i.name}.join(','),
+      :modified => { :title => 'test' } }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code']
 
     albums(:devons).images.each do |i|
-      get :view, :album => albums(:devons).name,
-        :name => i.name, :format => "json"
+      get :view, params: { :album => albums(:devons).name,
+        :name => i.name }, :format => "json"
       assert_response :success
       assert_equal 200, json_response['code']
       assert_equal 'test', json_response['self']['title']
@@ -80,8 +80,8 @@ class ImageControllerTest < ActionController::TestCase
   end
 
   test "view image, protected" do
-    get :view, :album => albums(:myr).name,
-      :name => albums(:myr).images[0].name, :format => "json"
+    get :view, params: { :album => albums(:myr).name,
+      :name => albums(:myr).images[0].name }, :format => "json"
     assert_response :success
     assert_equal 403, json_response['code']
     assert_equal albums(:protected).name,
@@ -95,15 +95,15 @@ class ImageControllerTest < ActionController::TestCase
     }
     images_list = albums(:devons).images
     post :update_list,
-      :items_list => images_list.collect{|i| i.name}.join(','),
-      :modified => { :album => albums(:protected2).name }, :format => "json"
+      params: { :items_list => images_list.collect{|i| i.name}.join(','),
+      :modified => { :album => albums(:protected2).name } }, :format => "json"
     assert_response :success
-    assert_equal nil, json_response['error']
+    assert_nil json_response['error']
     assert_equal 200, json_response['code']
 
     images_list.each do |i|
-      get :view, :album => albums(:protected2).name,
-        :name => i.name, :format => "json"
+      get :view, params: { :album => albums(:protected2).name,
+        :name => i.name }, :format => "json"
       assert_response :success
       assert_equal 200, json_response['code']
     end
@@ -114,12 +114,12 @@ class ImageControllerTest < ActionController::TestCase
       value: users(:user1).name,
       secure: true,
     }
-    post :delete, :name => images(:one).name , :format => "json"
+    post :delete, params: { :name => images(:one).name }, :format => "json"
     assert_response :success
-    assert_equal nil, json_response['error']
+    assert_nil json_response['error']
     assert_equal 200, json_response['code']
 
-    post :delete, :name => images(:one).name , :format => "json"
+    post :delete, params: { :name => images(:one).name }, :format => "json"
     assert_response :success
     assert_equal 404, json_response['code']
   end
@@ -131,15 +131,15 @@ class ImageControllerTest < ActionController::TestCase
     }
     images_list = albums(:devons).images
     post :update_list,
-      :items_list => images_list.collect{|i| i.name}.join(','),
-      :modified => { :tag => tags(:unassigned).tag }, :format => "json"
+      params: { :items_list => images_list.collect{|i| i.name}.join(','),
+      :modified => { :tag => tags(:unassigned).tag } }, :format => "json"
     assert_response :success
-    assert_equal nil, json_response['error']
+    assert_nil json_response['error']
     assert_equal 200, json_response['code']
 
     images_list.each do |i|
-      get :view, :album => albums(:devons).name,
-        :name => i.name, :format => "json"
+      get :view, params: { :album => albums(:devons).name,
+        :name => i.name }, :format => "json"
       assert_response :success
       assert_equal 200, json_response['code']
       assert_not_empty json_response['tags'].select{|tag|\
@@ -152,15 +152,15 @@ class ImageControllerTest < ActionController::TestCase
       value: users(:user1).name,
       secure: true,
     }
-    post :update, :album => images(:one).album.name,
+    post :update, params: { :album => images(:one).album.name,
       :name => images(:one).name,
-      :modified => { :title => "test_one" }, :format => "json"
+      :modified => { :title => "test_one" } }, :format => "json"
     assert_response :success
-    assert_equal nil, json_response['error']
+    assert_nil json_response['error']
     assert_equal 200, json_response['code']
 
-    get :view, :album => images(:one).album.name,
-      :name => images(:one).name, :format => "json"
+    get :view, params: { :album => images(:one).album.name,
+      :name => images(:one).name }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code']
     assert_equal 'test_one', json_response['self']['title']
@@ -173,22 +173,22 @@ class ImageControllerTest < ActionController::TestCase
     }
     tag = images(:one).tags[0].tag
 
-    get :view, :album => images(:one).album.name,
-      :name => images(:one).name, :format => "json"
+    get :view, params: { :album => images(:one).album.name,
+      :name => images(:one).name }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code']
     assert_not_empty json_response['tags'].select{|t|\
       t['name'] == tag }
 
-    post :remove_tag, :album => images(:one).album.name,
+    post :remove_tag, params: { :album => images(:one).album.name,
       :name => images(:one).name,
-      :tag => tag, :format => "json"
+      :tag => tag }, :format => "json"
     assert_response :success
-    assert_equal nil, json_response['error']
+    assert_nil json_response['error']
     assert_equal 200, json_response['code']
 
-    get :view, :album => images(:one).album.name,
-      :name => images(:one).name, :format => "json"
+    get :view, params: { :album => images(:one).album.name,
+      :name => images(:one).name }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code']
     assert_empty json_response['tags'].select{|t|\
@@ -202,32 +202,32 @@ class ImageControllerTest < ActionController::TestCase
     }
     tag = images(:one).tags[0].tag
 
-    get :view, :album => images(:one).album.name,
-      :name => images(:one).name, :format => "json"
+    get :view, params: { :album => images(:one).album.name,
+      :name => images(:one).name }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code']
     assert json_response['self']['image_of_day'], "one is an image of day before"
 
-    get :view, :album => images(:two).album.name,
-      :name => images(:two).name, :format => "json"
+    get :view, params: { :album => images(:two).album.name,
+      :name => images(:two).name }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code']
     assert_not json_response['self']['image_of_day'], "two is not an image of day before"
 
-    post :set_as_image_of_a_day, :album => images(:two).album.name,
-      :name => images(:two).name, :format => "json"
+    post :set_as_image_of_a_day, params: { :album => images(:two).album.name,
+      :name => images(:two).name }, :format => "json"
     assert_response :success
-    assert_equal nil, json_response['error']
+    assert_nil json_response['error']
     assert_equal 200, json_response['code']
 
-    get :view, :album => images(:one).album.name,
-      :name => images(:one).name, :format => "json"
+    get :view, params: { :album => images(:one).album.name,
+      :name => images(:one).name }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code']
     assert_not json_response['self']['image_of_day'], "one is not an image of day after"
 
-    get :view, :album => images(:two).album.name,
-      :name => images(:two).name, :format => "json"
+    get :view, params: { :album => images(:two).album.name,
+      :name => images(:two).name }, :format => "json"
     assert_response :success
     assert_equal 200, json_response['code']
     assert json_response['self']['image_of_day'], "two is an image of day after"
@@ -236,8 +236,8 @@ class ImageControllerTest < ActionController::TestCase
   test "view image nojs" do
     first_image = albums(:devons).images
       .order('images.created_at, images.name').first
-    get :view_in_list, :album => albums(:devons).name,
-      :nojs => true, :from => "album"
+    get :view_in_list, params: { :album => albums(:devons).name,
+      :nojs => true, :from => "album" }
     assert_response :success
     assert_select 'title', first_image.title
     assert_select '.breadcrumb .active', first_image.title
@@ -255,7 +255,7 @@ class ImageControllerTest < ActionController::TestCase
   end
 
   test "images, by_tag nojs" do
-    get :by_tag, :tag => tags(:one).tag, :nojs => true
+    get :by_tag, params: { :tag => tags(:one).tag, :nojs => true }
     assert_response :success
     assert_select 'title', tags(:one).tag
     assert_select 'ul.nav > li.active', 1
@@ -271,8 +271,8 @@ class ImageControllerTest < ActionController::TestCase
   end
 
   test "view image from tag nojs" do
-    get :view_in_list, :tag => tags(:one).tag,
-      :nojs => true, :from => "tag"
+    get :view_in_list, params: { :tag => tags(:one).tag,
+      :nojs => true, :from => "tag" }
     assert_response :success
     assert_select 'title', Image.all_by_tag(tags(:one)).first.title
     assert_select '.breadcrumb .active', Image.all_by_tag(tags(:one)).first.title
@@ -290,7 +290,7 @@ class ImageControllerTest < ActionController::TestCase
 
   test "images, by_date nojs" do
     date = images(:one).created_at.to_s
-    get :by_date, :date => date, :nojs => true
+    get :by_date, params: { :date => date, :nojs => true }
     assert_response :success
     assert_select 'title', date
     assert_select 'ul.nav > li.active', 1
@@ -310,7 +310,7 @@ class ImageControllerTest < ActionController::TestCase
   test "images, by_date reverse nojs" do
     request.session[:lists_order] = 'desc'
     date = images(:one).created_at.to_s
-    get :by_date, :date => date, :nojs => true
+    get :by_date, params: { :date => date, :nojs => true }
     assert_response :success
 
     assert_equal css_select('.my-title')[0].children[0].to_s,
@@ -319,8 +319,8 @@ class ImageControllerTest < ActionController::TestCase
 
   test "view image from date nojs" do
     date = images(:one).created_at.to_s
-    get :view_in_list, :date => date,
-      :nojs => true, :from => "date"
+    get :view_in_list, params: { :date => date,
+      :nojs => true, :from => "date" }
     assert_response :success
     assert_select 'title', Image.all_by_date(date).first.title
     assert_select '.breadcrumb .active', Image.all_by_date(date).first.title
@@ -339,8 +339,8 @@ class ImageControllerTest < ActionController::TestCase
   test "view image from date reverse nojs" do
     request.session[:lists_order] = 'desc'
     date = images(:one).created_at.to_s
-    get :view_in_list, :date => date,
-      :nojs => true, :from => "date"
+    get :view_in_list, params: { :date => date,
+      :nojs => true, :from => "date" }
     assert_response :success
     assert_select 'title', Image.all_by_date(date).last.title
   end

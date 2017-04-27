@@ -1,8 +1,8 @@
 require 'album_protection'
 
 class AlbumController < ApplicationController
-  before_filter :album_authorize, :only => :view
-  skip_before_filter :authorize_admin, :only => [
+  before_action :album_authorize, :only => :view
+  skip_before_action :authorize_admin, :only => [
     :view, :calendar, :by_tag, :authentify
   ]
 
@@ -34,7 +34,7 @@ class AlbumController < ApplicationController
     end
 
     if !params[:nojs] && need_unprotect
-      @items.collect! do |a|
+      @items = @items.collect do |a|
         if a.protected && AlbumProtection.authorize( a, cookies ).nil?
           a.as_json({ no_protection: true })
         else

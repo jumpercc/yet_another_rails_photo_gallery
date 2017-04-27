@@ -1,8 +1,8 @@
 class SessionController < ApplicationController
-  skip_before_filter :authorize_admin, :only => [
+  skip_before_action :authorize_admin, :only => [
     :login, :set_locale, :set_image_size, :set_lists_order
   ]
-  before_filter :html_gui, :only => []
+  before_action :html_gui, :only => []
 
   def login
     if params[:login].nil? || params[:login].empty? \

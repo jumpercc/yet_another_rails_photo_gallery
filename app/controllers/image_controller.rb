@@ -1,8 +1,8 @@
 class ImageController < ApplicationController
-  before_filter :album_authorize, :only => [
+  before_action :album_authorize, :only => [
     :view, :view_in_list
   ]
-  skip_before_filter :authorize_admin, :only => [
+  skip_before_action :authorize_admin, :only => [
     :by_tag, :by_date, :view, :view_in_list
   ]
 

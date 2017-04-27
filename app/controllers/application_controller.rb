@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :determine_locale, :determine_image_size, :determine_lists_order, :authorize_admin, :html_gui
+  before_action :determine_locale, :determine_image_size, :determine_lists_order, :authorize_admin, :html_gui
 
   attr_reader :image_size
 

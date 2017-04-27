@@ -39,13 +39,13 @@ class ImageTest < ActiveSupport::TestCase
 
   test "has photographer" do
     assert_equal images(:two).photographer, photographers(:one)
-    assert_equal images(:one).photographer, nil
+    assert_nil images(:one).photographer
   end
 
   test "clean up thumb in album" do
     assert_equal albums(:devons).thumb, images(:one).name
     images(:one).destroy
-    assert_equal albums(:devons).reload.thumb, nil
+    assert_nil albums(:devons).reload.thumb
   end
 
   test "change_album" do

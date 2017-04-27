@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '>=4.2.1'
+gem 'rails', '>=5.0.2'
 gem 'sqlite3'
 gem 'paperclip'
 gem 'will_paginate'
