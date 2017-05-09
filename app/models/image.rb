@@ -2,8 +2,8 @@ require 'fileutils'
 
 class Image < ActiveRecord::Base
   belongs_to :album
-  has_many :tags, :through => :images_tags
   has_many :images_tags, :dependent=> :delete_all
+  has_many :tags, :through => :images_tags
   accepts_nested_attributes_for :images_tags
   has_one :image_of_day, :dependent=> :destroy
   belongs_to :photographer

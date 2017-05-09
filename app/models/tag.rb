@@ -1,6 +1,6 @@
 class Tag < ActiveRecord::Base
-  has_many :images, :through => :images_tags
   has_many :images_tags, :dependent=> :delete_all
+  has_many :images, :through => :images_tags
 
   validates_presence_of :tag
   validates_uniqueness_of :tag
